@@ -1,0 +1,46 @@
+
+server {
+        error_log logs/git.error.log;
+        access_log logs/git.access.log;
+auth_basic "EverET.org GitWeb Server";
+auth_basic_user_file /usr/local/nginx/conf/gitauth;
+        listen       88;
+        server_name  gitserver;
+        index       gitweb.cgi;
+        root /home/git;
+        location ~* ^.+\.(css|js|png|jpg|jpeg)$ {
+            root  /var/www/gitweb;
+            access_log   off;
+            expires      24h;
+        }
+        location ~ \.(cgi|pl).*$ {
+                gzip off;
+                fastcgi_pass unix:/var/run/fcgiwrap.socket;  
+                fastcgi_param  SCRIPT_FILENAME    /var/www/gitweb/gitweb.cgi;
+                fastcgi_param  SCRIPT_NAME        gitweb.cgi;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+        }
+        location ~ ^.*\.git/objects/([0-9a-f]+/[0-9a-f]+|pack/pack-[0-9a-f]+.(pack|idx))$ {
+                root /home/git;
+        }
+        location ~ ^.*\.git/(HEAD|info/refs|objects/info/.*|git-(upload|receive)-pack)$ {
+                root /home/git;
+                fastcgi_param QUERY_STRING $query_string;
+                fastcgi_param SCRIPT_FILENAME /usr/libexec/git-core/git-http-backend;
+                fastcgi_param GIT_HTTP_EXPORT_ALL true;
+                fastcgi_param GIT_PROJECT_ROOT /home/git/repositories;
+                fastcgi_param PATH_INFO $uri;
+                include fastcgi_params;
+                fastcgi_pass unix:/var/run/fcgiwrap.socket;  
+        }
+        try_files $uri @gitweb;
+                location @gitweb {
+                fastcgi_pass unix:/var/run/fcgiwrap.socket;  
+                fastcgi_param SCRIPT_FILENAME /var/www/gitweb/gitweb.cgi;
+                fastcgi_param PATH_INFO $uri;
+                fastcgi_param GITWEB_CONFIG /etc/gitweb.conf;
+                include fastcgi_params;
+        }
+}
+
