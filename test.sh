@@ -46,19 +46,15 @@ ls -li > $book;
 
 cat $book | while read line
 do
-echo $line | awk '{print $6}' | while read temp
+echo $line | awk '{print $6}' | while read temp #读取文件大小
 do
 if [ $temp -le 565 ]
 then
 	NUM=1
 	str=${line//|/ } #将读入的line以空格拆分，保存到数组
 	#echo str 长度: ${#str[@]}
-	#for each in ${str[*]}
-    	#do
-    	#	echo $each
-   	#done
-    arr=($str)
-    echo arr 长度：${#arr[@]}
+	arr=($str)
+	echo arr 长度：${#arr[@]}
    	for each in ${arr[*]}
     	do
 		if [ $NUM -ge 10 ]; then  #第10列开始才是文件的名字，因为文件名可以有空格，故需要多次读入
@@ -69,7 +65,6 @@ then
 		NUM=$(( $NUM + 1 ))
 		
     	done
-	echo ""
 	echo "" >>$remove_books #文件换行
         
 	#line 本身不是元组，所以赋值也不会按照元组的方式赋值？
@@ -81,12 +76,12 @@ then
 	#rm -i ``echo $line | awk '{print $1}'`
 fi
 done
-#echo $size
 done
 exit 0
 
 
-#CAN IGNORE!  useless
+#CAN IGNORE! 
+#CAN IGNORE! 
 for i in $she;
 do
 	count=`expr $count + 1 `
