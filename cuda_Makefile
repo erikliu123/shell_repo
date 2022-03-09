@@ -1,0 +1,14 @@
+all : c cpp   
+  
+c : libtestcu.so  
+  gcc test2.c   -ltestcu -L. -lcudart -L/usr/local/cuda/lib64 -o testc  
+  
+cpp : libtestcu.so  
+  g++ test3.cpp -ltestcu -L. -lcudart -L/usr/local/cuda/lib64 -o testcpp  
+  
+libtestcu.so : test.cu  
+  nvcc -o libtestcu.so -shared -Xcompiler -fPIC test1.cu  
+  
+  
+clean :  
+  rm *.so testc testcpp  -f
