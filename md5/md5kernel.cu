@@ -43,13 +43,18 @@ __device__ uint32_t cuda_to_int32(const uint8_t *bytes)
         | ((uint32_t) bytes[3] << 24);
 }
  
-__global__ void md5kernel(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest, const uint32_t *k, const uint32_t *r) {
- 
+__global__ void md5kernel( uint8_t *initial_msg, size_t initial_len, uint8_t *digest_all, const uint32_t *k, const uint32_t *r) {
+    //int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    // int idx = (blockIdx.y * gridDim.x + blockIdx.x) * (blockDim.x * blockDim.y) + threadIdx.y * blockDim.y + threadIdx.x;
+    int idx  = threadIdx.y * blockDim.y + threadIdx.x; 
+    if(idx >= 1024)
+        printf("wrong index %d !!!!\n", idx);
     // These vars will contain the hash
     uint32_t h0, h1, h2, h3;
  
     // Message (to prepare)
-    uint8_t *msg = NULL;
+    uint8_t *msg = initial_msg + (idx * 4096);
+    uint8_t *digest = digest_all + idx * 16;
  
     size_t new_len, offset;
     uint32_t w[16];
@@ -65,12 +70,7 @@ __global__ void md5kernel(const uint8_t *initial_msg, size_t initial_len, uint8_
     //append "1" bit to message    
     //append "0" bits until message length in bits ≡ 448 (mod 512)
     //append length mod (2^64) to message
- 
-    for (new_len = initial_len + 1; new_len % (512/8) != 448/8; new_len++)
-        ;
- 
-    msg = (uint8_t *)malloc(new_len + 8);
-    memcpy(msg, initial_msg, initial_len);
+ #if NO_APPEND    
     msg[initial_len] = 0x80; // append the "1" bit; most significant bit is "first"
     for (offset = initial_len + 1; offset < new_len; offset++)
         msg[offset] = 0; // append "0" bits
@@ -79,7 +79,10 @@ __global__ void md5kernel(const uint8_t *initial_msg, size_t initial_len, uint8_
     cuda_to_bytes(initial_len*8, msg + new_len);
     // initial_len>>29 == initial_len*8>>32, but avoids overflow.
     cuda_to_bytes(initial_len>>29, msg + new_len + 4);
- 
+#else
+    initial_len = 4096;
+    new_len = initial_len;
+#endif
     // Process the message in successive 512-bit chunks:
     //for each 512-bit chunk of message:
     for(offset=0; offset<new_len; offset += (512/8)) {
@@ -128,7 +131,7 @@ __global__ void md5kernel(const uint8_t *initial_msg, size_t initial_len, uint8_
     }
  
     // cleanup
-    free(msg);
+    //free(msg);
  
     //var char digest[16] := h0 append h1 append h2 append h3 //(Output is in little-endian)
     cuda_to_bytes(h0, digest);
@@ -144,6 +147,7 @@ void preallloc(int initial_len)
 {
 
      // Allocate GPU buffers for three vectors (two input, one output).
+    int cnt = initial_len / 4096;
     cudaError_t cudaStatus = cudaMalloc((void**)&dev_k, k_size * sizeof(uint32_t));
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMalloc failed!");
@@ -156,7 +160,7 @@ void preallloc(int initial_len)
         goto Error;
     }
 
-    cudaStatus = cudaMalloc((void**)&dev_digest, md5_size * sizeof(uint8_t));
+    cudaStatus = cudaMalloc((void**)&dev_digest, md5_size * cnt);
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMalloc failed!");
         goto Error;
@@ -273,11 +277,13 @@ __global__ void md5kernelRounds(const uint8_t *initial_msg, size_t initial_len, 
 }
 
 // Helper function for using CUDA to compute MD5
-cudaError_t md5WithCuda(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest, uint64_t &consume_time)
+cudaError_t md5WithCuda(uint8_t *initial_msg, size_t initial_len, uint8_t *digest, uint64_t &consume_time)
 {
 
     cudaError_t cudaStatus;
     clock_t begin, end;
+    int cnt = initial_len / 4096;
+    dim3 grid(1, 1, 1), block(32, 32, 1); 
     // Choose which GPU to run on, change this on a multi-GPU system.
     cudaStatus = cudaSetDevice(0);
     if (cudaStatus != cudaSuccess) {
@@ -305,8 +311,8 @@ cudaError_t md5WithCuda(const uint8_t *initial_msg, size_t initial_len, uint8_t 
     }
 
     // Launch a kernel on the GPU with one thread for each element.
-    begin = clock();
-	md5kernel<<<1, 1>>>(dev_initial_msg, initial_len, dev_digest, dev_k, dev_r);
+    begin = clock();   
+	md5kernel<<<grid, block>>>(dev_initial_msg, initial_len, dev_digest, dev_k, dev_r);
    
     // Check for any errors launching the kernel
     cudaStatus = cudaGetLastError();
@@ -327,7 +333,7 @@ cudaError_t md5WithCuda(const uint8_t *initial_msg, size_t initial_len, uint8_t 
 
 
     // Copy output vector from GPU buffer to host memory.
-    cudaStatus = cudaMemcpy(digest, dev_digest, md5_size * sizeof(uint8_t), cudaMemcpyDeviceToHost);
+    cudaStatus = cudaMemcpy(digest, dev_digest, md5_size * cnt, cudaMemcpyDeviceToHost);
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMemcpy failed! %d\n", __LINE__);
         goto Error;

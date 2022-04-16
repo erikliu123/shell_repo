@@ -32,7 +32,7 @@
 #define r_size 64
 
 void preallloc(int initial_len);
-cudaError_t md5WithCuda(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest, uint64_t &consume_time);
+cudaError_t md5WithCuda(uint8_t *initial_msg, size_t initial_len, uint8_t *digest, uint64_t &consume_time);
 cudaError_t md5WithCudaRounds(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest, const long rounds);
 cudaError_t md5WithCudaTimed(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest, clock_t& begin, clock_t& end);
 

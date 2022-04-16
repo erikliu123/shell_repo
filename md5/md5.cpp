@@ -70,6 +70,7 @@ void md5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest) {
  
     msg = (uint8_t *)malloc(new_len + 8);
     memcpy(msg, initial_msg, initial_len);
+#if NO_APPEND    
     msg[initial_len] = 0x80; // append the "1" bit; most significant bit is "first"
     for (offset = initial_len + 1; offset < new_len; offset++)
         msg[offset] = 0; // append "0" bits
@@ -78,7 +79,9 @@ void md5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest) {
     to_bytes(initial_len*8, msg + new_len);
     // initial_len>>29 == initial_len*8>>32, but avoids overflow.
     to_bytes(initial_len>>29, msg + new_len + 4);
- 
+#else
+    new_len = initial_len;
+#endif
     // Process the message in successive 512-bit chunks:
     //for each 512-bit chunk of message:
     for(offset=0; offset<new_len; offset += (512/8)) {
