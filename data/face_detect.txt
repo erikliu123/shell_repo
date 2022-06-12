@@ -1,0 +1,45 @@
+[2022-03-17 09:22:14.778780] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:16.034712] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test.bmp], exclude malloc, total time: 4265563, SPDK malloc time: 10 , SPDK IO consume: 874, computation time: 4264688
+[2022-03-17 09:22:16.167948] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:17.393269] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_1.bmp], exclude malloc, total time: 1347090, SPDK malloc time: 1 , SPDK IO consume: 608, computation time: 1346481
+[2022-03-17 09:22:17.526133] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:18.750072] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_2.bmp], exclude malloc, total time: 1349480, SPDK malloc time: 1 , SPDK IO consume: 549, computation time: 1348931
+[2022-03-17 09:22:18.880155] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:20.105457] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_3.bmp], exclude malloc, total time: 1348027, SPDK malloc time: 1 , SPDK IO consume: 588, computation time: 1347439
+[2022-03-17 09:22:20.235073] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:21.458780] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_4.bmp], exclude malloc, total time: 1345991, SPDK malloc time: 1 , SPDK IO consume: 558, computation time: 1345432
+[2022-03-17 09:22:21.600277] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:22.824860] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_5.bmp], exclude malloc, total time: 1358780, SPDK malloc time: 1 , SPDK IO consume: 702, computation time: 1358078
+[2022-03-17 09:22:22.954967] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:24.183275] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_6.bmp], exclude malloc, total time: 1351110, SPDK malloc time: 1 , SPDK IO consume: 548, computation time: 1350562
+[2022-03-17 09:22:24.313002] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:25.535850] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_7.bmp], exclude malloc, total time: 1345104, SPDK malloc time: 2 , SPDK IO consume: 555, computation time: 1344548
+[2022-03-17 09:22:25.666047] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:26.888013] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_8.bmp], exclude malloc, total time: 1344781, SPDK malloc time: 1 , SPDK IO consume: 552, computation time: 1344229
+[2022-03-17 09:22:27.017734] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:22:28.242191] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_9.bmp], exclude malloc, total time: 1346795, SPDK malloc time: 1 , SPDK IO consume: 590, computation time: 1346205
+[2022-03-17 09:22:28.251008] ndp.cu: 186:alloc_and_start_sub_req: *INFO*: total task excution time [16495329]
+
+
+
+[2022-03-17 09:23:49.924725] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:51.150040] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test.bmp], exclude malloc, total time: 1369770, SPDK malloc time: 1 , SPDK IO consume: 563, computation time: 1369206
+[2022-03-17 09:23:51.280381] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:52.506635] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_1.bmp], exclude malloc, total time: 1349254, SPDK malloc time: 1 , SPDK IO consume: 542, computation time: 1348711
+[2022-03-17 09:23:52.636675] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:53.861160] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_2.bmp], exclude malloc, total time: 1347168, SPDK malloc time: 1 , SPDK IO consume: 587, computation time: 1346581
+[2022-03-17 09:23:53.991267] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:55.215858] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_3.bmp], exclude malloc, total time: 1347255, SPDK malloc time: 2 , SPDK IO consume: 625, computation time: 1346629
+[2022-03-17 09:23:55.346178] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:56.570106] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_4.bmp], exclude malloc, total time: 1346918, SPDK malloc time: 2 , SPDK IO consume: 573, computation time: 1346345
+[2022-03-17 09:23:56.711614] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:57.935502] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_5.bmp], exclude malloc, total time: 1358092, SPDK malloc time: 2 , SPDK IO consume: 645, computation time: 1357447
+[2022-03-17 09:23:58.065355] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:23:59.289279] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_6.bmp], exclude malloc, total time: 1346468, SPDK malloc time: 2 , SPDK IO consume: 563, computation time: 1345905
+[2022-03-17 09:23:59.419214] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:24:00.644971] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_7.bmp], exclude malloc, total time: 1348371, SPDK malloc time: 1 , SPDK IO consume: 587, computation time: 1347784
+[2022-03-17 09:24:00.775164] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:24:01.998928] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_8.bmp], exclude malloc, total time: 1346648, SPDK malloc time: 2 , SPDK IO consume: 537, computation time: 1346110
+[2022-03-17 09:24:02.129289] ndp_cv.cu: 193:ndp_compute_face_detection: *INFO*: ### accel:1 ### Number of faces detected: 4
+[2022-03-17 09:24:03.353376] ndp_cv.cu: 226:ndp_compute_face_detection: *INFO*: file[/mnt/ndp/test_9.bmp], exclude malloc, total time: 1347085, SPDK malloc time: 1 , SPDK IO consume: 587, computation time: 1346497
+[2022-03-17 09:24:03.362203] ndp.cu: 186:alloc_and_start_sub_req: *INFO*: total task excution time [13595439]
