@@ -1,0 +1,1 @@
+sudo  nvme io-passthru /dev/nvme0 --opcode=0x82 --namespace-id=0x1 --data-len=8192 --cdw12=15 --cdw10=16 --cdw14=3  --read | less

@@ -26,8 +26,20 @@ sudo x86_64-softmmu/qemu-system-x86_64 \
     -device scsi-hd,drive=hd0 \
     -drive file=$OSIMGF,if=none,aio=native,cache=none,format=qcow2,id=hd0 \
     -device femu,devsz_mb=4096,femu_mode=1 \
+    -device femu,devsz_mb=4096,femu_mode=1 \
+    -net tap,ifname=tap0,script=no,downscript=no \
+    -net nic,macaddr=`dd if=/dev/urandom count=1 2>/dev/null | md5sum | sed 's/^\(.\)\(..\)\(..\)\(..\)\(..\)\(..\).*$/\14:\2:\3:\4:\5:\6/g'` \
+    -nographic \
+    -device vfio-pci,host=17:00.0,addr=10.0,multifunction=on \
+    -device vfio-pci,host=17:00.1,addr=11.0,multifunction=on \
+    -device vhost-vsock-pci,guest-cid=10 \
+    -qmp unix:./qmp-sock,server,nowait 2>&1 | tee log
+
+exit
+
+# 旧选项
     -net user,hostfwd=tcp::8080-:22 \
     -net nic,model=virtio \
-    -nographic \
-    -device vfio-pci,host=17:00.0,addr=09.0,multifunction=on \
-    -qmp unix:./qmp-sock,server,nowait 2>&1 | tee log
+-device vfio-pci,host=17:00.0,addr=09.0,multifunction=on \
+-device vfio-pci,host=17:00.1,addr=10.0,multifunction=on \
+
