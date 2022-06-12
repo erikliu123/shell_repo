@@ -5,7 +5,7 @@ result_file_prex=res_
 output_dir=tmp
 dev=`sudo nvme list | grep SPDK | awk '{print $1}'` #/dev/nvme1n1 #TEST device
 bssize=4096
-optype=read
+optype=randwrite
 option=1
 test_list="4k 16k 64k 256k 1m 2m" #"4k 16k" #
 
@@ -25,7 +25,7 @@ function process_result(){
         echo "process result..."
         now=`date +%m%d_%H_%M_%S`
         latency=`sed -n 's/\s\+lat\s\+([um]sec):\s\+min=\([0-9]\+\),.*/\1/gp' $1`
-        bw=`sed -n 's/.*READ:\s\+bw=[0-9]\+MiB\/s\s\+(\([0-9]\+\)MB\/s).*/\1/gp' $1` #READ->WRITE
+        bw=`sed -n 's/.*WRITE:\s\+bw=[0-9]\+MiB\/s\s\+(\([0-9]\+\)MB\/s).*/\1/gp' $1` #READ->WRITE
         result_file=$result_file_prex$optype".txt"
         echo "$now $option $bssize $bw $latency" >> $result_file
         echo "the result has store in $result_file"
